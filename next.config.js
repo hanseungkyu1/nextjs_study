@@ -1,7 +1,27 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-}
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {
+//   reactStrictMode: true,
+//   swcMinify: true,
+// }
 
-module.exports = nextConfig
+// const API_KEY = "dd696e6b4b5b49c8a2008c68bd75c005";
+const API_KEY = process.env.API_KEY;
+
+module.exports = {
+  reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: "/old-blog/:path*",
+        destination: "/new-sexy-blog/:path*",
+        permanent: false,
+      },
+    ];
+  },
+  async rewrites() {
+    return [{
+      source: "/api/movies",
+      destination: `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}`
+    }];
+  },
+};
